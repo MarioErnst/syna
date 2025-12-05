@@ -263,3 +263,17 @@
     font-size: 0.6rem;
   }
 }
+.pillar-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.pillar-vida_sana { background: #10b981; color: #022c22; }
+.pillar-crecimiento_intelectual { background: #06b6d4; color: #082f49; }
+.pillar-habitos_personales { background: #f59e0b; color: #3b2907; }
+
+.calendar-day.has-activities-vida_sana { border-color: #10b981; }
+.calendar-day.has-activities-crecimiento_intelectual { border-color: #06b6d4; }
+.calendar-day.has-activities-habitos_personales { border-color: #f59e0b; }

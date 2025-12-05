@@ -16,6 +16,7 @@ const Calendar = () => {
     description: '',
     date: '',
     time: '',
+    pillar: 'habitos_personales',
   });
 
   // Load activities
@@ -104,6 +105,7 @@ const Calendar = () => {
       description: activity.description || '',
       date: activity.date,
       time: activity.time || '',
+      pillar: activity.pillar || 'habitos_personales',
     });
     setShowModal(true);
   };
@@ -121,7 +123,7 @@ const Calendar = () => {
       
       await loadActivities();
       setShowModal(false);
-      setFormData({ title: '', description: '', date: '', time: '' });
+      setFormData({ title: '', description: '', date: '', time: '', pillar: 'habitos_personales' });
       setEditingActivity(null);
       setError(null);
     } catch (err) {
@@ -166,7 +168,7 @@ const Calendar = () => {
       days.push(
         <div
           key={day}
-          className={`calendar-day ${isToday ? 'today' : ''} ${dayActivities.length > 0 ? 'has-activities' : ''}`}
+          className={`calendar-day ${isToday ? 'today' : ''} ${dayActivities.length > 0 ? 'has-activities' : ''} ${dayActivities.length > 0 ? `has-activities-${dayActivities[0].pillar}` : ''}`}
           onClick={() => handleDayClick(day)}
         >
           <span className="day-number">{day}</span>
@@ -196,6 +198,19 @@ const Calendar = () => {
           </h3>
           <button onClick={nextMonth} className="btn btn-secondary">
             →
+          </button>
+          <button
+            onClick={() => {
+              const todayDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+              setSelectedDate(todayDate);
+              setFormData({ title: '', description: '', date: todayDate, time: '', pillar: 'habitos_personales' });
+              setEditingActivity(null);
+              setShowModal(true);
+            }}
+            className="btn btn-primary"
+            style={{ marginLeft: 'auto' }}
+          >
+            Nueva actividad
           </button>
         </div>
       </div>
@@ -233,6 +248,7 @@ const Calendar = () => {
                 <div key={activity.id} className="activity-card fade-in">
                   <div className="activity-content">
                     <h4 className="activity-title">{activity.title}</h4>
+                    <span className={`pillar-chip pillar-${activity.pillar}`}>{activity.pillar.replace('_', ' ')}</span>
                     {activity.time && (
                       <p className="activity-time">🕐 {activity.time}</p>
                     )}
@@ -297,6 +313,19 @@ const Calendar = () => {
                   value={formData.time}
                   onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                 />
+              </div>
+
+              <div className="form-group">
+                <label>Pilar *</label>
+                <select
+                  value={formData.pillar}
+                  onChange={(e) => setFormData({ ...formData, pillar: e.target.value })}
+                  required
+                >
+                  <option value="vida_sana">Vida sana</option>
+                  <option value="crecimiento_intelectual">Crecimiento intelectual</option>
+                  <option value="habitos_personales">Hábitos personales</option>
+                </select>
               </div>
 
               <div className="form-group">
