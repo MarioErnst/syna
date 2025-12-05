@@ -7,6 +7,7 @@ load_dotenv()
 
 from models import init_db
 from routes import activities, chat
+import realtime
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -30,6 +31,13 @@ init_db()
 # Register routers
 app.include_router(activities.router)
 app.include_router(chat.router)
+app.include_router(realtime.router)
+
+
+@app.on_event("startup")
+async def _startup():
+    import asyncio
+    realtime.set_loop(asyncio.get_running_loop())
 
 
 @app.get("/")

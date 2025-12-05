@@ -4,6 +4,7 @@ from typing import List
 
 from models import Activity, get_db
 from schemas import ActivityCreate, ActivityUpdate, ActivityResponse
+from realtime import broadcast_activity_change
 
 router = APIRouter(prefix="/api/activities", tags=["activities"])
 
@@ -31,6 +32,14 @@ def create_activity(activity: ActivityCreate, db: Session = Depends(get_db)):
     db.add(db_activity)
     db.commit()
     db.refresh(db_activity)
+    broadcast_activity_change("created", {
+        "id": db_activity.id,
+        "title": db_activity.title,
+        "description": db_activity.description,
+        "date": db_activity.date,
+        "time": db_activity.time,
+        "created_at": db_activity.created_at.isoformat()
+    })
     return db_activity
 
 
@@ -51,6 +60,14 @@ def update_activity(
     
     db.commit()
     db.refresh(db_activity)
+    broadcast_activity_change("updated", {
+        "id": db_activity.id,
+        "title": db_activity.title,
+        "description": db_activity.description,
+        "date": db_activity.date,
+        "time": db_activity.time,
+        "created_at": db_activity.created_at.isoformat()
+    })
     return db_activity
 
 
@@ -61,6 +78,12 @@ def delete_activity(activity_id: int, db: Session = Depends(get_db)):
     if not db_activity:
         raise HTTPException(status_code=404, detail="Activity not found")
     
+    payload = {
+        "id": db_activity.id,
+        "title": db_activity.title,
+        "date": db_activity.date
+    }
     db.delete(db_activity)
     db.commit()
+    broadcast_activity_change("deleted", payload)
     return {"message": "Activity deleted successfully"}

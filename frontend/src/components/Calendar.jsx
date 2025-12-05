@@ -23,6 +23,29 @@ const Calendar = () => {
     loadActivities();
   }, []);
 
+  useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws/activities';
+    const ws = new WebSocket(wsUrl);
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.event === 'created') {
+          setActivities(prev => [...prev, data.activity]);
+        } else if (data.event === 'updated') {
+          setActivities(prev => prev.map(a => a.id === data.activity.id ? data.activity : a));
+        } else if (data.event === 'deleted') {
+          setActivities(prev => prev.filter(a => a.id !== data.activity.id));
+        }
+      } catch {
+        console.error('Error procesando mensaje WS');
+      }
+    };
+    return () => {
+      ws.close();
+    };
+  }, []);
+
   const loadActivities = async () => {
     try {
       setLoading(true);
