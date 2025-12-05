@@ -44,6 +44,8 @@
   grid-template-columns: repeat(7, 1fr);
   gap: var(--spacing-sm);
   flex: 1;
+  grid-auto-rows: 120px;
+  align-items: stretch;
 }
 
 .calendar-day-name {
@@ -55,7 +57,6 @@
 }
 
 .calendar-day {
-  aspect-ratio: 1;
   background: var(--bg-primary);
   border: 1px solid var(--bg-tertiary);
   border-radius: var(--radius-md);
@@ -65,14 +66,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 .calendar-day:hover:not(.empty) {
   background: var(--bg-tertiary);
-  transform: scale(1.05);
   border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .calendar-day.empty {
@@ -249,9 +251,8 @@
     width: 100%;
   }
   
-  .calendar-day {
-    font-size: 0.75rem;
-  }
+  .calendar-grid { grid-auto-rows: 90px; }
+  .calendar-day { font-size: 0.75rem; }
   
   .day-number {
     font-size: 0.875rem;
@@ -277,3 +278,41 @@
 .calendar-day.has-activities-vida_sana { border-color: #10b981; }
 .calendar-day.has-activities-crecimiento_intelectual { border-color: #06b6d4; }
 .calendar-day.has-activities-habitos_personales { border-color: #f59e0b; }
+.day-activities {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.activity-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-time-small {
+  opacity: 0.8;
+}
+
+.activity-title-small {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-block.pillar-vida_sana { background: rgba(16, 185, 129, 0.12); color: #c7f3e8; border: 1px solid rgba(16,185,129,0.25); }
+.activity-block.pillar-crecimiento_intelectual { background: rgba(6, 182, 212, 0.12); color: #d6f6fc; border: 1px solid rgba(6,182,212,0.25); }
+.activity-block.pillar-habitos_personales { background: rgba(245, 158, 11, 0.12); color: #fde9c9; border: 1px solid rgba(245,158,11,0.25); }
+
+.more-indicator {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}

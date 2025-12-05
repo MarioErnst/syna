@@ -19,12 +19,9 @@
 }
 
 .chat-title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .chat-status {
@@ -39,7 +36,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--success);
+  background: var(--bg-tertiary);
 }
 
 .status-indicator.loading {
@@ -67,14 +64,10 @@
 }
 
 .message-avatar {
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: var(--bg-primary);
+  background: var(--bg-tertiary);
   flex-shrink: 0;
 }
 
@@ -88,8 +81,8 @@
 }
 
 .message.user .message-content {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-color: var(--primary);
+  background: var(--bg-secondary);
+  border-color: var(--bg-tertiary);
 }
 
 .message.error .message-content {
@@ -170,9 +163,8 @@
 
 .suggestion-chip:hover {
   background: var(--bg-tertiary);
-  border-color: var(--primary);
+  border-color: var(--bg-tertiary);
   color: var(--text-primary);
-  transform: translateY(-2px);
 }
 
 .chat-input-form {

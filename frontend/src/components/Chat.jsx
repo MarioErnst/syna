@@ -7,7 +7,7 @@ const Chat = () => {
     {
       id: 1,
       role: 'assistant',
-      content: '¡Hola! 👋 Soy tu asistente de calendario. Puedes preguntarme sobre tus actividades programadas, como "¿Qué tengo hoy?" o "¿Cuándo es mi próxima reunión?"'
+      content: 'Hola. Soy tu asistente de calendario. Puedes preguntarme sobre tus actividades o solicitar cambios.'
     }
   ]);
   const [input, setInput] = useState('');
@@ -73,7 +73,7 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h2 className="chat-title">💬 Asistente IA</h2>
+        <h2 className="chat-title">Asistente</h2>
         <div className="chat-status">
           <span className={`status-indicator ${loading ? 'loading' : 'ready'}`}></span>
           <span className="status-text">
@@ -88,9 +88,7 @@ const Chat = () => {
             key={message.id}
             className={`message ${message.role} fade-in`}
           >
-            <div className="message-avatar">
-              {message.role === 'user' ? '👤' : message.role === 'error' ? '⚠️' : '🤖'}
-            </div>
+            <div className="message-avatar" />
             <div className="message-content">
               <p>{message.content}</p>
             </div>
@@ -144,7 +142,7 @@ const Chat = () => {
           disabled={loading || !input.trim()}
           className="btn btn-primary send-button"
         >
-          {loading ? '⏳' : '📤'}
+          {loading ? '...' : 'Enviar'}
         </button>
       </form>
     </div>

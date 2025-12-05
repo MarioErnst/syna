@@ -90,6 +90,14 @@ const Calendar = () => {
     return activities.filter(activity => activity.date === date);
   };
 
+  const sortByTime = (list) => {
+    return [...list].sort((a, b) => {
+      const ta = a.time ? a.time : '99:99';
+      const tb = b.time ? b.time : '99:99';
+      return ta.localeCompare(tb);
+    });
+  };
+
   const handleDayClick = (day) => {
     const date = formatDate(year, month, day);
     setSelectedDate(date);
@@ -165,6 +173,9 @@ const Calendar = () => {
         month === today.getMonth() && 
         year === today.getFullYear();
       
+      const sorted = sortByTime(dayActivities);
+      const visible = sorted.slice(0, 3);
+      const remaining = sorted.length - visible.length;
       days.push(
         <div
           key={day}
@@ -172,9 +183,22 @@ const Calendar = () => {
           onClick={() => handleDayClick(day)}
         >
           <span className="day-number">{day}</span>
-          {dayActivities.length > 0 && (
-            <div className="activity-indicator">
-              <span className="activity-count">{dayActivities.length}</span>
+          {visible.length > 0 && (
+            <div className="day-activities">
+              {visible.map(a => (
+                <div
+                  key={a.id}
+                  className={`activity-block pillar-${a.pillar}`}
+                  onClick={(e) => { e.stopPropagation(); handleEditActivity(a); }}
+                  title={`${a.time ? a.time + ' ' : ''}${a.title}`}
+                >
+                  {a.time && <span className="activity-time-small">{a.time}</span>}
+                  <span className="activity-title-small">{a.title}</span>
+                </div>
+              ))}
+              {remaining > 0 && (
+                <div className="more-indicator">+{remaining} más</div>
+              )}
             </div>
           )}
         </div>
@@ -187,7 +211,7 @@ const Calendar = () => {
   return (
     <div className="calendar-container">
       <div className="calendar-header">
-        <h2 className="calendar-title">📅 Calendario</h2>
+        <h2 className="calendar-title">Calendario</h2>
         
         <div className="month-navigation">
           <button onClick={prevMonth} className="btn btn-secondary">
@@ -250,7 +274,7 @@ const Calendar = () => {
                     <h4 className="activity-title">{activity.title}</h4>
                     <span className={`pillar-chip pillar-${activity.pillar}`}>{activity.pillar.replace('_', ' ')}</span>
                     {activity.time && (
-                      <p className="activity-time">🕐 {activity.time}</p>
+                      <p className="activity-time">{activity.time}</p>
                     )}
                     {activity.description && (
                       <p className="activity-description">{activity.description}</p>
@@ -261,13 +285,13 @@ const Calendar = () => {
                       onClick={() => handleEditActivity(activity)}
                       className="btn btn-secondary btn-sm"
                     >
-                      ✏️
+                      Editar
                     </button>
                     <button
                       onClick={() => handleDelete(activity.id)}
                       className="btn btn-danger btn-sm"
                     >
-                      🗑️
+                      Eliminar
                     </button>
                   </div>
                 </div>

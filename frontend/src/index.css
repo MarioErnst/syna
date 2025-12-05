@@ -1,15 +1,15 @@
 :root {
   /* Colors */
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #818cf8;
-  --secondary: #ec4899;
-  --secondary-dark: #db2777;
-  --accent: #06b6d4;
+  --primary: #2d2d2d;
+  --primary-dark: #1f1f1f;
+  --primary-light: #3a3a3a;
+  --secondary: #2a2a2a;
+  --secondary-dark: #222222;
+  --accent: #606060;
 
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1e1e1e;
 
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
@@ -54,7 +54,7 @@
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
     sans-serif;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1f36 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.6;
@@ -182,7 +182,7 @@ textarea {
 input:focus,
 textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(128, 128, 128, 0.2);
 }
 
 input::placeholder,
